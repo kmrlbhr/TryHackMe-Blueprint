@@ -54,15 +54,19 @@ Since I found osCommerce 2.3.4 during Stage 1, I use this stage to research how 
 ```bash
 searchsploit oscommerce 2.3.4
 ```
-image
+
+<img width="936" height="174" alt="searchsploit tryhackme" src="https://github.com/user-attachments/assets/43f07e76-2bc5-4eea-add2-74aeacce9da6" />
+
 
 After discovering the **osCommerce 2.3.4** installation during the enumeration phase, I utilized `searchsploit` to cross-reference the exact version with known public exploits. The search revealed that this specific version is highly vulnerable to unauthenticated attacks.
+
 
 | Vulnerability / Component | Type | Impact | Exploit / Source | Key Findings |
 | :--- | :--- | :--- | :--- | :--- |
 | **osCommerce 2.3.4.1** | Remote Code Execution (RCE) | **Critical** | `44374.py` (Exploit-DB) | Unauthenticated RCE via the `/install` directory. This is the primary vector for gaining initial system access. |
 | **osCommerce 2.3.4.1** | Remote Code Execution (RCE) | **Critical** | `50128.py` (Exploit-DB) | Alternative unauthenticated RCE script, useful if the primary payload fails. |
 | **osCommerce 2.3.4.1** | Arbitrary File Upload | High | `43191.py` (Exploit-DB) | Allows for uploading a web shell, though typically requires higher access or specific misconfigurations compared to the RCE. |
+
 
 **Assessment Conclusion:** 
 The application has not been patched against critical RCE vulnerabilities. I will proceed to the Exploitation phase utilizing the `44374.py` exploit to achieve remote code execution.
