@@ -13,3 +13,5 @@ I need to connect to TryHackMe server so i can directly use my kali to get this 
    ```bash
    ping 192.168.206.94
    ```
+<img width="508" height="187" alt="ping tryhackme" src="https://github.com/user-attachments/assets/53e9b023-8478-4226-9612-56d54a28ece5" />
+
