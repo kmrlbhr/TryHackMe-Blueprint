@@ -171,5 +171,32 @@ FLAG : THM{aea1e3ce6fe7f89e10cea833ae009bee}
 <img width="488" height="38" alt="Screenshot 2026-05-08 062704" src="https://github.com/user-attachments/assets/08aecc41-5f5e-4992-ab63-56a75965d1c8" />
 
 
-## Stage 5 : Clear Track ##
+## Stage 5 : Masquerading(If Want To Stay Longer) ## 
 
+To evade basic string-based detection and manual file system audits, the primary post-exploitation tool was renamed using the ren command. By masquerading as svchost.exe, the technique attempts to blend in with legitimate Windows Service Host processes, although it remains susceptible to signature-based detection and heuristic analysis of the process path
+
+```bash
+dir
+ren mimikatz.exe svchost.exe
+dir
+```
+
+image
+
+
+## Stage 6 : Clear Track ##
+
+Once the objectives (capturing the root flag) were met, the following steps were taken to remediate the forensic footprint:
+
+   • Deleted the renamed svchost.exe binary.
+   ```bash
+   del svchost.exe
+   dir
+   ```
+
+   • Cleared the Windows Event Logs using wevtutil cl System
+   ```bash
+   wevtutil cl System
+   ```
+
+image
