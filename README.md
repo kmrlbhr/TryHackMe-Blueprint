@@ -1,4 +1,4 @@
-## Enviroment Setup ##
+## 🛠️ Enviroment Setup ##
 
 I need to connect to TryHackMe server so i can directly use my kali to get this task done.
 
@@ -15,3 +15,22 @@ I need to connect to TryHackMe server so i can directly use my kali to get this 
    ```
 <img width="508" height="187" alt="ping tryhackme" src="https://github.com/user-attachments/assets/53e9b023-8478-4226-9612-56d54a28ece5" />
 
+## 🔍 Stage 1: Reconnaissance & Scanning ##
+
+I used nmap to identify open ports, service versions, and run default scripts. Comprehensive port scan
+
+```bash
+sudo nmap -sC -sV -p- -T4 10.49.173.176
+```
+
+## Flag Breakdown :
+
+• -sC : Runs default Nmap scripts to check for common misconfigurations.
+
+• -sV : Probes open ports to determine service and version information.
+
+• -p- : Scans all 65,535 ports.
+
+• -T4 : Sets the timing template to "Aggressive" for faster execution.
+
+Findings:
