@@ -37,3 +37,12 @@ sudo nmap -sC -sV -p- -T4 10.49.173.176
 • -T4 : Sets the timing template to "Aggressive" for faster execution.
 
 Findings:
+| Port | State | Service | Version | Key Findings |
+| :--- | :--- | :--- | :--- | :--- |
+| **80** | Open | HTTP | Microsoft IIS httpd 7.5 | Returning 404 for the root directory; potentially a decoy or misconfigured service. |
+| **135/139** | Open | RPC/NetBIOS | Microsoft Windows RPC | Confirmed the target is a Windows-based system. |
+| **443** | Open | HTTPS | Apache 2.4.23 (OpenSSL 1.0.2h) | **Critical:** Directory listing enabled. Exposed `/oscommerce-2.3.4/` and its subdirectories (`catalog/`, `docs/`). |
+| **445** | Open | SMB | Windows 7 Home Basic 7601 SP1 | Identified OS version and hostname `BLUEPRINT`. Message signing is "enabled but not required." |
+| **3306** | Open | MySQL | MariaDB 10.3.23 | Database service detected; currently "unauthorized" for remote root login. |
+| **8080** | Open | HTTP | Apache 2.4.23 (OpenSSL 1.0.2h) | Mirroring Port 443; directory listing exposed `/oscommerce-2.3.4/` via a non-standard port. |
+| **49152+** | Open | MSRPC | Microsoft Windows RPC | High-range ports used for standard Windows RPC communication. |
