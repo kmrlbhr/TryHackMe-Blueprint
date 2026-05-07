@@ -23,6 +23,9 @@ I used nmap to identify open ports, service versions, and run default scripts. C
 sudo nmap -sC -sV -p- -T4 10.49.173.176
 ```
 
+<img width="658" height="846" alt="nmap tryhackme" src="https://github.com/user-attachments/assets/c0e7a407-92ee-42ed-9d53-5ab89d2bef30" />
+
+
 ## Flag Breakdown :
 
 • -sC : Runs default Nmap scripts to check for common misconfigurations.
