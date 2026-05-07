@@ -1,4 +1,4 @@
-Enviroment Setup
+## Enviroment Setup ##
 
 I need to connect to TryHackMe server so i can directly use my kali to get this task done.
 
