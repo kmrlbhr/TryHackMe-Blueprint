@@ -20,10 +20,11 @@ I need to connect to TryHackMe server so i can directly use my kali to get this 
 I used nmap to identify open ports, service versions, and run default scripts. Comprehensive port scan
 
 ```bash
-sudo nmap -sC -sV -p- -T4 10.49.173.176
+sudo nmap -sC -sV -p- -T4 10.49.151.74
 ```
 
-<img width="658" height="846" alt="nmap tryhackme" src="https://github.com/user-attachments/assets/c0e7a407-92ee-42ed-9d53-5ab89d2bef30" />
+<img width="667" height="848" alt="Screenshot 2026-05-08 070210" src="https://github.com/user-attachments/assets/ce7fabfd-ff4b-4fd7-b84a-01fcabb506d3" />
+
 
 
 ## Flag Breakdown :
@@ -181,7 +182,8 @@ ren mimikatz.exe svchost.exe
 dir
 ```
 
-image
+<img width="607" height="507" alt="Screenshot 2026-05-08 073547" src="https://github.com/user-attachments/assets/417a1b26-0327-46a7-a92a-2a34744bcb6d" />
+
 
 
 ## Stage 6 : Clear Track ##
@@ -199,4 +201,5 @@ Once the objectives (capturing the root flag) were met, the following steps were
    wevtutil cl System
    ```
 
-image
+<img width="600" height="285" alt="Screenshot 2026-05-08 074903" src="https://github.com/user-attachments/assets/00c265f3-425c-4076-a473-d79471c4255c" />
+
