@@ -46,3 +46,23 @@ Findings:
 | **3306** | Open | MySQL | MariaDB 10.3.23 | Database service detected; currently "unauthorized" for remote root login. |
 | **8080** | Open | HTTP | Apache 2.4.23 (OpenSSL 1.0.2h) | Mirroring Port 443; directory listing exposed `/oscommerce-2.3.4/` via a non-standard port. |
 | **49152+** | Open | MSRPC | Microsoft Windows RPC | High-range ports used for standard Windows RPC communication. |
+
+## Stage 2: Vulnerability Assessment ##
+
+Since I found osCommerce 2.3.4 during Stage 1, I use this stage to research how that software can be compromised.
+
+```bash
+searchsploit oscommerce 2.3.4
+```
+image
+
+After discovering the **osCommerce 2.3.4** installation during the enumeration phase, I utilized `searchsploit` to cross-reference the exact version with known public exploits. The search revealed that this specific version is highly vulnerable to unauthenticated attacks.
+
+| Vulnerability / Component | Type | Impact | Exploit / Source | Key Findings |
+| :--- | :--- | :--- | :--- | :--- |
+| **osCommerce 2.3.4.1** | Remote Code Execution (RCE) | **Critical** | `44374.py` (Exploit-DB) | Unauthenticated RCE via the `/install` directory. This is the primary vector for gaining initial system access. |
+| **osCommerce 2.3.4.1** | Remote Code Execution (RCE) | **Critical** | `50128.py` (Exploit-DB) | Alternative unauthenticated RCE script, useful if the primary payload fails. |
+| **osCommerce 2.3.4.1** | Arbitrary File Upload | High | `43191.py` (Exploit-DB) | Allows for uploading a web shell, though typically requires higher access or specific misconfigurations compared to the RCE. |
+
+**Assessment Conclusion:** 
+The application has not been patched against critical RCE vulnerabilities. I will proceed to the Exploitation phase utilizing the `44374.py` exploit to achieve remote code execution.
