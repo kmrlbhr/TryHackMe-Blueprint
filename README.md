@@ -1,4 +1,15 @@
-## 🛠️ Enviroment Setup ##
+## TryHackMe | Blueprint ##
+
+   • Target IP: 10.49.151.74
+
+   • Attacker IP: 192.168.206.94
+
+   • Platform: Window
+
+   • Objective: Capture the root flag (root.txt.txt)
+
+
+## 🛠️ Enviroment Setup 
 
 I need to connect to TryHackMe server so i can directly use my kali to get this task done.
 
@@ -15,7 +26,7 @@ I need to connect to TryHackMe server so i can directly use my kali to get this 
    ```
 <img width="508" height="187" alt="ping tryhackme" src="https://github.com/user-attachments/assets/53e9b023-8478-4226-9612-56d54a28ece5" />
 
-## 🔍 Stage 1: Reconnaissance & Scanning ##
+## 🔍 Stage 1: Reconnaissance & Scanning 
 
 I used nmap to identify open ports, service versions, and run default scripts. Comprehensive port scan
 
@@ -27,7 +38,7 @@ sudo nmap -sC -sV -p- -T4 10.49.151.74
 
 
 
-## Flag Breakdown :
+ **Flag Breakdown** :
 
 • -sC : Runs default Nmap scripts to check for common misconfigurations.
 
@@ -48,7 +59,7 @@ Findings:
 | **8080** | Open | HTTP | Apache 2.4.23 (OpenSSL 1.0.2h) | Mirroring Port 443; directory listing exposed `/oscommerce-2.3.4/` via a non-standard port. |
 | **49152+** | Open | MSRPC | Microsoft Windows RPC | High-range ports used for standard Windows RPC communication. |
 
-## Stage 2: Vulnerability Assessment ##
+## Stage 2: Vulnerability Assessment 
 
 Since I found osCommerce 2.3.4 during Stage 1, I use this stage to research how that software can be compromised.
 
@@ -73,7 +84,7 @@ After discovering the **osCommerce 2.3.4** installation during the enumeration p
 The application has not been patched against critical RCE vulnerabilities. I will proceed to the Exploitation phase utilizing the `44374.py` exploit to achieve remote code execution.
 
 
-## Stage 3: Exploitation ##
+## Stage 3: Exploitation 
 
 • Using a publicly available exploit from [GitHub](https://github.com/nobodyatall648/osCommerce-2.3.4-Remote-Command-Execution/blob/main/osCommerce2_3_4RCE.py) targeting osCommerce 2.3.4, remote command execution was:
 
@@ -92,7 +103,7 @@ This demonstrated that commands could be executed on the host with SYSTEM privil
 <img width="684" height="125" alt="Screenshot 2026-05-08 051205" src="https://github.com/user-attachments/assets/a06fba0d-f005-4067-b907-2e6337089584" />
 
 
-## Stage 4: Post-Exploitation (Maintaining Access & Privilege Escalation) ##
+## Stage 4: Post-Exploitation (Maintaining Access & Privilege Escalation) 
 
 Once inside, I explores the system, gathers sensitive data, and attempts to secure my foothold. (Because the author already had SYSTEM privileges, I skipped Privilege Escalation and moved straight to credential harvesting).
 
